@@ -26,6 +26,7 @@ import * as RequestLib from "request";
 import { PdMethod } from "./PdMethod";
 import { PdResponse } from "./PdResponse";
 import * as HTTP from "http";
+import {Neon} from "@element-ts/neon";
 
 export class PdRequest {
 
@@ -45,6 +46,7 @@ export class PdRequest {
 
 	public setBearerToken(token: string): void {
 
+		Neon.log("Adding token to auth header: " + token);
 		if (this.headers === undefined) this.headers = {};
 		this.headers["Authorization"] = "Bearer " + token;
 
@@ -52,12 +54,14 @@ export class PdRequest {
 
 	public setUrl(url: string): void {
 
+		Neon.log("Set url: " + url);
 		this.url = url;
 
 	}
 
 	public setMethod(method: PdMethod): void {
 
+		Neon.log("Set url: " + method);
 		this.method = method;
 
 	}
@@ -110,6 +114,7 @@ export class PdRequest {
 
 	public requestAsync(completion: (error: Error | undefined, response: PdResponse | undefined) => void): void {
 
+		Neon.log(`Will make request to '${this.url}' with method '${this.method}'. Providing headers: '${JSON.stringify(this.body || {})}' and body of length: ${this.body?.length || 0}.`);
 		if (!this.method) throw new Error("You must supply a HTTP method for the request.");
 		if (!this.url) throw new Error("You must supply a URL for the request.");
 
@@ -155,4 +160,13 @@ export class PdRequest {
 		}));
 
 	}
+
+	public static enableLogging(): void {
+
+		Neon.setTitle("@element-ts/palladium");
+		Neon.enable();
+
+	}
+
+	public static disableLogging(): void { Neon.disable(); }
 }

@@ -23,6 +23,8 @@
  */
 
 import * as RequestLib from "request";
+import {OType} from "@element-ts/oxygen";
+import {Neon} from "@element-ts/neon";
 
 export class PdResponse {
 
@@ -38,6 +40,13 @@ export class PdResponse {
 
 	}
 
+	public getTypeCheckedValue<T>(type: OType): T | undefined {
+
+		Neon.log("Using @element-ts/oxygen to verify types.");
+		return type.verify(this.getJSON()) as T;
+
+	}
+
 	public getJSON(): object | undefined {
 
 		let res: object | undefined = undefined;
@@ -47,7 +56,7 @@ export class PdResponse {
 			if (typeof this.body === "object") res = this.body;
 			else res = JSON.parse(this.body);
 
-		} catch (e) {}
+		} catch (e) { Neon.err(e); }
 
 		return res;
 
@@ -66,7 +75,7 @@ export class PdResponse {
 
 			} else res = Buffer.from(this.body, "utf8");
 
-		} catch (e) {}
+		} catch (e) { Neon.err(e); }
 
 		return res;
 
@@ -85,7 +94,7 @@ export class PdResponse {
 
 			} else res = this.body;
 
-		} catch (e) {}
+		} catch (e) { Neon.err(e); }
 
 		return res;
 
