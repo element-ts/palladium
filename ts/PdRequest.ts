@@ -151,8 +151,8 @@ export class PdRequest {
 
 			request.on("error", reject);
 
-			if (body !== undefined && this._method !== PdMethod.get) request.end(body);
-			else request.end();
+			if (body !== undefined) request.write(body);
+			request.end();
 
 		});
 	}
