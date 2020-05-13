@@ -1,33 +1,35 @@
 # palladium
-A type-safe http/s request library.
-
-## Import
-Import what you need. You will most likely not need to import all of these.
-```typescript
-import {
-    PdRequest,
-    PdResponse,
-    PdMethod
-} from "element-ts/palladium";
-```
+A type-safe promise based http/s request library.
 
 ## Example
-#### Creating a Request
-```typescript
-const req: PdRequest = new PdRequest();
-req.setMethod(PdMethod.Post);
-req.setUrl("my-api-address");
-req.setBody({
-    name: "Elijah Cobb"
-})
-req.setBearerToken("my-cool-token");
-```
+In the following example you create a PDRequest instance via the `post()` static method and then using builder methods
+you can add the correct attributed to the request and then at the end call the async method `request()`. This will
+return a `PdResponse` instance.
 
-#### Fetching Response
+On the response instance there are helpful methods to handle type checking. Getting the headers, status code are
+obvious. However, you can get the raw body or use the `json()` method. This required an `OObjectTypeDefinition` which
+you can learn more about in [element-ts/oxygen](https://github.com/element-ts/oxygen). This will return undefined if
+the response does not match the type definition provided, or return a generic defined value based on the type
+definition.
 ```typescript
-const res: PdResponse = await req.request();
-const code: number = res.statusCode;
-const body: object | undefined = res.getJSON()
+import {OStandardType} from "@element-ts/oxygen";
+import {PdRequest, PdResponse} from "@element-ts/palladium";
+const res: PdResponse = await PdRequest
+    .post()
+    .url("https://api.com/my-endpoint")
+    .token("xxx")
+    .body({
+    	email: "elijah@elijahcobb.com",
+    	password: "1234"
+    })
+    .request();
+
+console.log(res.status());
+console.log(res.headers());
+console.log(res.json({
+    token: OStandardType.string,
+    timestamp: OStandardType.number
+}));
 ```
 
 ## Documentation

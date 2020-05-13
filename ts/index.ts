@@ -5,7 +5,6 @@
  * github.com/elijahjcobb
  */
 
-
-export { PdRequest } from "./PdRequest";
-export { PdMethod } from "./PdMethod";
-export { PdResponse } from "./PdResponse";
+export * from "./PdRequest";
+export * from "./PdMethod";
+export * from "./PdResponse";

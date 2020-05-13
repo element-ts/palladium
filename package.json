@@ -1,8 +1,20 @@
 {
-  "name": "@element-ts/palloadium",
-  "version": "1.0.0",
-  "description": "A type-safe http/s request library.",
-  "keywords": [],
+  "name": "@element-ts/palladium",
+  "version": "2.0.1",
+  "description": "A type-safe promise based http/s request library.",
+  "keywords": [
+    "request",
+    "promise",
+    "http",
+    "https",
+    "typescript",
+    "type",
+    "runtime",
+    "network",
+    "cloud",
+    "api",
+    "json"
+  ],
   "main": "js/index",
   "types": "dts/index",
   "files": [
@@ -19,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/element-ts/palloadium.git"
+    "url": "git+https://github.com/element-ts/palladium.git"
   },
   "publishConfig": {
     "access": "public"
@@ -27,12 +39,10 @@
   "author": "Elijah Cobb <elijah@elijahcobb.com> (https://elijahcobb.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/element-ts/palloadium/issues"
+    "url": "https://github.com/element-ts/palladium/issues"
   },
-  "homepage": "https://github.com/element-ts/palloadium#readme",
+  "homepage": "https://github.com/element-ts/palladium#readme",
   "dependencies": {
-    "request": "latest",
-    "@element-ts/neon": "latest",
     "@element-ts/oxygen": "latest"
   },
   "devDependencies": {
@@ -40,7 +50,6 @@
     "typescript": "latest",
     "tslint": "latest",
     "jest": "latest",
-    "@types/jest": "latest",
-    "@types/request": "latest"
+    "@types/jest": "latest"
   }
 }
