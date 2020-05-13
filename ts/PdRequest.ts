@@ -129,18 +129,23 @@ export class PdRequest {
 			this._logger.log(config);
 
 			const handler = (res: HTTP.IncomingMessage): void => {
+				this._logger.log("Response instance created.");
 				res.on("error", reject);
 				res.on("data", data => {
+					this._logger.log("Received data.");
 					resolve(new PdResponse(res, data, this._logger, Date.now() - startTime));
 				});
 			};
 
 			let request: HTTP.ClientRequest;
 			if (this._url.includes("http")) {
+				this._logger.log("Will create http request.");
 				request = HTTP.request(config, handler);
 			} else if (this._url.includes("https")) {
+				this._logger.log("Will create https request.");
 				request = HTTPS.request(config, handler);
 			} else {
+				this._logger.err("Request was neither http or https.");
 				throw new Error("URL was not http or https.");
 			}
 
