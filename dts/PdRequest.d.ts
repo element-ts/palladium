@@ -33,7 +33,7 @@ export declare class PdRequest {
     /**
      * Enable debug mode.
      */
-    debug(): void;
+    debug(): PdRequest;
     /**
      * Set a header for the request.
      * @param key The header.

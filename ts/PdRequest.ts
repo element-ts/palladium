@@ -85,9 +85,10 @@ export class PdRequest {
 	/**
 	 * Enable debug mode.
 	 */
-	public debug(): void {
+	public debug(): PdRequest {
 		this._logger.setTitle("@element-ts/palladium");
 		this._logger.enable();
+		return this;
 	}
 
 	/**
