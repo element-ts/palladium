@@ -124,9 +124,10 @@ export class PdRequest {
 				throw new Error("URL was not http or https.");
 			}
 
-			if (body !== undefined && this._method !== PdMethod.get) request.write(body);
 			request.on("error", reject);
-			request.end();
+
+			if (body !== undefined && this._method !== PdMethod.get) request.end(body);
+			else request.end();
 
 		});
 	}
