@@ -1,5 +1,4 @@
 .idea
 node_modules
-dts
 js
 package-lock.json
