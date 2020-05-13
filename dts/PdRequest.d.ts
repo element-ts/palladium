@@ -11,6 +11,7 @@ export declare class PdRequest {
     private readonly _method;
     private _url;
     private _body;
+    private _logger;
     private constructor();
     private setInternalHeaders;
     private encodeBody;
@@ -29,6 +30,10 @@ export declare class PdRequest {
      * @param value A token.
      */
     token(value: string): PdRequest;
+    /**
+     * Enable debug mode.
+     */
+    debug(): void;
     /**
      * Set a header for the request.
      * @param key The header.

@@ -7,21 +7,32 @@
 
 import * as HTTP from "http";
 import {OObjectType, OObjectTypeDefinition, OType} from "@element-ts/oxygen";
+import {Neon} from "@element-ts/neon";
 
 export class PdResponse {
 
 	private readonly _res: HTTP.IncomingMessage;
 	private readonly _data: any;
+	private readonly _logger: Neon;
+	private readonly _time: number;
 
 	/**
 	 * Do not use this, a response is generated automatically.
 	 * @param res A response object.
 	 * @param data The data associated with the response.
+	 * @param logger A neon logger instance.
+	 * @param time The round trip time.
 	 */
-	public constructor(res: HTTP.IncomingMessage, data: any) {
+	public constructor(res: HTTP.IncomingMessage, data: any, logger: Neon, time: number) {
 
 		this._res = res;
 		this._data = data;
+		this._logger = logger;
+		this._time = time;
+		this._logger.log(`Received response in ${time} ms.`);
+		this._logger.log(`Status code: ${res.statusCode}.`);
+		this._logger.log(res.headers);
+		this._logger.log(data);
 
 	}
 
@@ -56,6 +67,13 @@ export class PdResponse {
 	}
 
 	/**
+	 * The amount of time in milliseconds it took the request to complete.
+	 */
+	public time(): number {
+		return this._time;
+	}
+
+	/**
 	 * Get the data from the response, it will be undefined if the data does not follow the type provided.
 	 *
 	 * This uses @element-ts/oxygen, view the readme for more information on oxygen:
@@ -85,6 +103,8 @@ export class PdResponse {
 		if (!Buffer.isBuffer(data)) return undefined;
 		const dataAsString = (data as Buffer).toString("utf8");
 		const obj: T = JSON.parse(dataAsString);
+
+		this._logger.log("Able to parse response to JSON, will type check.");
 
 		return OObjectType.follow(type).verify(obj);
 

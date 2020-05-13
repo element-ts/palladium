@@ -10,6 +10,7 @@ import * as HTTP from "http";
 import {URL} from "url";
 import {PdResponse} from "./PdResponse";
 import {PdMethod} from "./PdMethod";
+import {Neon} from "@element-ts/neon";
 
 export class PdRequest {
 
@@ -17,10 +18,12 @@ export class PdRequest {
 	private readonly _method: PdMethod;
 	private _url: string | undefined;
 	private _body: any;
+	private _logger: Neon;
 
 	private constructor(method: PdMethod) {
 
 		this._method = method;
+		this._logger = new Neon();
 		this._headers = {};
 
 	}
@@ -80,6 +83,14 @@ export class PdRequest {
 	}
 
 	/**
+	 * Enable debug mode.
+	 */
+	public debug(): void {
+		this._logger.setTitle("@element-ts/palladium");
+		this._logger.enable();
+	}
+
+	/**
 	 * Set a header for the request.
 	 * @param key The header.
 	 * @param value The value for the header.
@@ -95,10 +106,15 @@ export class PdRequest {
 	public request(): Promise<PdResponse> {
 		return new Promise<PdResponse>((resolve, reject) => {
 
+			const startTime = Date.now();
+			this._logger.log(`Creating new request.`);
+
 			if (this._url === undefined) throw new Error("URL is undefined.");
 
 			this.setInternalHeaders();
+			this._logger.log("Set internal headers.");
 			const body = this.encodeBody();
+			this._logger.log("Encoded body.");
 			const url = new URL(this._url);
 			const config: HTTP.RequestOptions = {
 				hostname: url.hostname,
@@ -108,10 +124,13 @@ export class PdRequest {
 				headers: this._headers,
 			};
 
+			this._logger.log("Will make request:");
+			this._logger.log(config);
+
 			const handler = (res: HTTP.IncomingMessage): void => {
 				res.on("error", reject);
 				res.on("data", data => {
-					resolve(new PdResponse(res, data));
+					resolve(new PdResponse(res, data, this._logger, Date.now() - startTime));
 				});
 			};
 
