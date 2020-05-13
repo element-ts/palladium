@@ -158,4 +158,12 @@ export class PdRequest {
 	public static delete(): PdRequest {
 		return new PdRequest(PdMethod.delete);
 	}
+
+	/**
+	 * Create a new request instance.
+	 * @param method A type of method.
+	 */
+	public static init(method: PdMethod): PdRequest {
+		return new PdRequest(method);
+	}
 }

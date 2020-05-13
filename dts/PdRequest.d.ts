@@ -5,6 +5,7 @@
  * github.com/elijahjcobb
  */
 import { PdResponse } from "./PdResponse";
+import { PdMethod } from "./PdMethod";
 export declare class PdRequest {
     private readonly _headers;
     private readonly _method;
@@ -54,4 +55,9 @@ export declare class PdRequest {
      * Create a delete request instance.
      */
     static delete(): PdRequest;
+    /**
+     * Create a new request instance.
+     * @param method A type of method.
+     */
+    static init(method: PdMethod): PdRequest;
 }
