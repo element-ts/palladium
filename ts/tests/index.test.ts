@@ -1,7 +1,6 @@
 import {PdRequest} from "../PdRequest";
 import {PdMethod} from "../PdMethod";
 import {PdResponse} from "../PdResponse";
-import {OArrayType, OObjectType, OStandardType} from "@element-ts/oxygen";
 
 test("test", async (): Promise<void> => {
 
@@ -17,9 +16,5 @@ test("test", async (): Promise<void> => {
 
 	console.log(res.status());
 	console.log(res.headers());
-	console.log(res.json({
-		token: OStandardType.string,
-		timestamp: OStandardType.number
-	}));
 
 });

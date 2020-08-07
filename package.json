@@ -1,6 +1,6 @@
 {
   "name": "@element-ts/palladium",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "A type-safe promise based http/s request library.",
   "keywords": [
     "request",
@@ -43,7 +43,6 @@
   },
   "homepage": "https://github.com/element-ts/palladium#readme",
   "dependencies": {
-    "@element-ts/oxygen": "latest",
     "@element-ts/neon": "latest"
   },
   "devDependencies": {

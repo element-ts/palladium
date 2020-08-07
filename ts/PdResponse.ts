@@ -6,7 +6,6 @@
  */
 
 import * as HTTP from "http";
-import {OObjectType, OObjectTypeDefinition, OType} from "@element-ts/oxygen";
 import {Neon} from "@element-ts/neon";
 
 export class PdResponse {
@@ -75,38 +74,19 @@ export class PdResponse {
 
 	/**
 	 * Get the data from the response, it will be undefined if the data does not follow the type provided.
-	 *
-	 * This uses @element-ts/oxygen, view the readme for more information on oxygen:
-	 * https://github.com/element-ts/oxygen/
-	 *
-	 * @param type An OType.
-	 */
-	public payload<T>(type: OType): T | undefined {
-
-		return type.verify(this._data);
-
-	}
-
-	/**
-	 * Get the data from the response, it will be undefined if the data does not follow the type provided.
 	 * First it will try and convert the data into an object.
 	 *
 	 * This uses @element-ts/oxygen, view the readme for more information on oxygen:
 	 * https://github.com/element-ts/oxygen/
 	 *
-	 * @param type A type definition for an OObjectType.
 	 */
-	public json<T>(type: OObjectTypeDefinition): T | undefined {
+	public json(): object | undefined {
 
 		const data = this._data;
 		if (data === undefined) return undefined;
 		if (!Buffer.isBuffer(data)) return undefined;
 		const dataAsString = (data as Buffer).toString("utf8");
-		const obj: T = JSON.parse(dataAsString);
-
-		this._logger.log("Able to parse response to JSON, will type check.");
-
-		return OObjectType.follow(type).verify(obj);
+		return JSON.parse(dataAsString);
 
 	}
 
